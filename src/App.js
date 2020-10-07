@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import "./App.css";
 import firebase from "firebase";
 import "firebase/analytics";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+// import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import { BrowserRouter as Router } from "react-router-dom";
+import Navigation from './components/Navigation';
 
 firebase.initializeApp({
   apiKey: "AIzaSyCrIG73G5Kjhx2njmTCC5baoYSav8IBal8",
@@ -33,23 +35,15 @@ class App extends Component {
       this.setState({ isSignedIn: !!user });
       console.log("user", user);
     });
-  };
+  }
 
   render() {
     return (
-      <div className="App">
-        {this.state.isSignedIn ? (
-          <span>
-            <h1>Welcome {firebase.auth().currentUser.displayName}</h1>
-            <button onClick={() => firebase.auth().signOut()}>Sign out!</button>
-          </span>
-        ) : (
-          <StyledFirebaseAuth
-            uiConfig={this.uiConfig}
-            firebaseAuth={firebase.auth()}
-          />
-        )}
-      </div>
+      <Router>
+        <div>
+          <Navigation user={this.state.user} />
+        </div>
+      </Router>
     );
   }
 }
